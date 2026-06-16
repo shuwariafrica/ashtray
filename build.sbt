@@ -25,7 +25,7 @@ val libraries = new {
   val `mssql-jdbc` = "com.microsoft.sqlserver" % "mssql-jdbc" % "13.4.0.jre11"
   val `scribe-slf4j` = "com.outr" %% "scribe-slf4j" % "3.19.0"
   val zio = "dev.zio" %% "zio" % "2.1.26"
-  val `zio-prelude` = "dev.zio" %% "zio-prelude" % "1.0.0-RC44"
+  val `zio-prelude` = "dev.zio" %% "zio-prelude" % "1.0.0-RC47"
   val `testcontainers-scala-munit` = "com.dimafeng" %% "testcontainers-scala-munit" % "0.44.0"
   val `testcontainers-scala-mssqlserver` = `testcontainers-scala-munit`.withName("testcontainers-scala-mssqlserver")
 }

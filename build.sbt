@@ -18,7 +18,7 @@ inThisBuild(
 )
 
 val libraries = new {
-  final val scalaVersion = "3.7.4"
+  final val scalaVersion = "3.8.4"
   val `doobie-core` = "org.tpolecat" %% "doobie-core" % "1.0.0-RC12"
   val `doobie-munit` = `doobie-core`(_.withName("doobie-munit"))
   val munit = "org.scalameta" %% "munit" % "1.3.3"

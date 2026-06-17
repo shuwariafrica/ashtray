@@ -43,6 +43,7 @@ val `ashtray-test` =
         libraries.`mssql-jdbc`
       )
     )
+    .settings(wErrorWorkaround)
 
 val `ashtray-mssql` =
   project
@@ -60,6 +61,7 @@ val `ashtray-mssql` =
         libraries.`mssql-jdbc`,
         libraries.`scribe-slf4j` % Test
       ))
+    .settings(wErrorWorkaround)
 
 val `ashtray-zio-prelude` =
   project
@@ -76,6 +78,7 @@ val `ashtray-zio-prelude` =
         libraries.`scribe-slf4j` % Test
       ))
     .dependsOn(`ashtray-mssql` % Test)
+    .settings(wErrorWorkaround)
 
 val `ashtray` =
   project
@@ -137,6 +140,20 @@ def pgpSettings: List[Setting[?]] = List(
       .map(_.toCharArray),
   usePgpKeyHex(System.getenv("SIGNING_KEY_ID"))
 )
+
+def wErrorWorkaround: Seq[Setting[?]] = {
+  // Scala 3.8.x renders fatal-warnings as the now-deprecated `-Xfatal-warnings`
+  // alias. Replace with replacement `-Werror`.
+  def common(c: Configuration) = (c / compile / scalacOptions) := {
+    val options = (c / compile / scalacOptions).value
+    options.filterNot(o => o == "-Xfatal-warnings" || o == "-Werror") :+ "-Werror"
+  }
+
+  Seq(
+    common(Compile),
+    common(Test)
+  )
+}
 
 addCommandAlias("format", "scalafmtAll; scalafmtSbt; scalafixAll; headerCreateAll")
 

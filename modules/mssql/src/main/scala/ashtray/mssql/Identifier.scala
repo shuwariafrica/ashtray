@@ -225,12 +225,12 @@ object Identifier:
 
   /** Build an [[Identifier]] from a 16-byte big-endian array, validating length. */
   def fromBytes(bytes: Array[Byte]): Either[AshtrayError, Identifier] =
-    if bytes == null then Left(AshtrayError.IdentifierError.NullInput)
+    if bytes == null then Left(AshtrayError.IdentifierError.NullInput) // scalafix:ok
     else if bytes.length != 16 then Left(AshtrayError.IdentifierError.InvalidByteArrayLength(bytes.length, 16))
     else
       val msb = readLong(bytes, 0)
       val lsb = readLong(bytes, 8)
-      Right((msb, lsb)) // scalafix:ok
+      Right((msb, lsb))
 
   /** Unsafely build from bytes, throwing on invalid input. */
   def fromBytesUnsafe(bytes: Array[Byte]): Identifier = fromBytes(bytes) match
@@ -239,13 +239,13 @@ object Identifier:
 
   /** Build from SQL Server mixed-endian bytes, validating length. */
   def fromSqlServerBytes(bytes: Array[Byte]): Either[AshtrayError, Identifier] =
-    if bytes == null then Left(AshtrayError.IdentifierError.NullInput)
+    if bytes == null then Left(AshtrayError.IdentifierError.NullInput) // scalafix:ok
     else if bytes.length != 16 then Left(AshtrayError.IdentifierError.InvalidByteArrayLength(bytes.length, 16))
     else
       val swapped = swapSqlServerBytes(bytes.clone())
       val msb = readLong(swapped, 0)
       val lsb = readLong(swapped, 8)
-      Right((msb, lsb)) // scalafix:ok
+      Right((msb, lsb))
 
   /** Unsafely build from SQL Server bytes, throwing on invalid input. */
   def fromSqlServerBytesUnsafe(bytes: Array[Byte]): Identifier = fromSqlServerBytes(bytes) match
@@ -340,6 +340,9 @@ object Identifier:
     def node: Long = id._2 & 0xffffffffffffL
 
   // === Internal: validation and formatting ===
+
+// scalafix:off
+
   private def validateAndParseBits(s: String): Either[AshtrayError, Identifier] =
     if s == null then Left(AshtrayError.IdentifierError.NullInput)
     else if s.length != 36 then Left(AshtrayError.IdentifierError.InvalidLength(s.length, 36))
@@ -374,7 +377,7 @@ object Identifier:
         lsb = lsb2
         error = err5
 
-      if error ne null then Left(error.nn) else Right((msb, lsb)) // scalafix:ok
+      if error ne null then Left(error.nn) else Right((msb, lsb))
 
   private inline def hexToBits(
     s: String,
@@ -390,7 +393,7 @@ object Identifier:
       if n < 0 then err = AshtrayError.IdentifierError.InvalidCharacter(s.charAt(i), i, s)
       else result = (result << 4) | n
       i += 1
-    (result, err) // scalafix:ok
+    (result, err)
 
   private inline def hexToNibble(c: Char): Int =
     if c >= '0' && c <= '9' then c - '0'
@@ -419,7 +422,7 @@ object Identifier:
     while i < endIdx do
       chars(i) = HexChars(((bits >>> shift) & 0xf).toInt)
       shift -= 4
-      i += 1 // scalafix:ok
+      i += 1
 
   private inline def writeLongs(msb: Long, lsb: Long): Array[Byte] =
     val bytes = new Array[Byte](16)
@@ -431,7 +434,7 @@ object Identifier:
     var i = 0
     while i < 8 do
       array(offset + i) = (value >>> (56 - i * 8)).toByte
-      i += 1 // scalafix:ok
+      i += 1
 
   private inline def readLong(bytes: Array[Byte], offset: Int): Long =
     var result = 0L
@@ -439,7 +442,7 @@ object Identifier:
     while i < 8 do
       result = (result << 8) | (bytes(offset + i) & 0xffL)
       i += 1
-    result // scalafix:ok
+    result
 
   private inline def encodeSqlServer(id: Identifier): Array[Byte] =
     val bytes = writeLongs(id._1, id._2)
@@ -456,3 +459,4 @@ object Identifier:
     swap(6, 7)
     bytes
 end Identifier
+// scalafix:on

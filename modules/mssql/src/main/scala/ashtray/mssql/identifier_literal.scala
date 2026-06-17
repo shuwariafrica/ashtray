@@ -68,24 +68,24 @@ private object IdentifierLiteral:
             '{
               Identifier.Versioned
                 .unsafeWrap[Version.V1.type](Identifier(${ Expr(msb) }, ${ Expr(lsb) }))
-                .asInstanceOf[Identifier.Versioned[Version.V1.type | Version.V4.type | Version.V7.type]]
+                .asInstanceOf[Identifier.Versioned[Version.V1.type | Version.V4.type | Version.V7.type]] // scalafix:ok
             }
           case 4 =>
             '{
               Identifier.Versioned
                 .unsafeWrap[Version.V4.type](Identifier(${ Expr(msb) }, ${ Expr(lsb) }))
-                .asInstanceOf[Identifier.Versioned[Version.V1.type | Version.V4.type | Version.V7.type]]
+                .asInstanceOf[Identifier.Versioned[Version.V1.type | Version.V4.type | Version.V7.type]] // scalafix:ok
             }
           case 7 =>
             '{
               Identifier.Versioned
                 .unsafeWrap[Version.V7.type](Identifier(${ Expr(msb) }, ${ Expr(lsb) }))
-                .asInstanceOf[Identifier.Versioned[Version.V1.type | Version.V4.type | Version.V7.type]]
+                .asInstanceOf[Identifier.Versioned[Version.V1.type | Version.V4.type | Version.V7.type]] // scalafix:ok
             }
           case other =>
             report.errorAndAbort(
               s"Identifier literal has unsupported version nibble v$other for typed literal; use id\"...\" instead"
-            ) // scalafix:ok
+            )
     end match
   end implVersioned
 
@@ -128,14 +128,14 @@ private object IdentifierLiteral:
         else wrap(msb, lsb)
 
   private def validate(s: String): Either[String, Unit] =
-    if s == null then Left("Identifier literal was null")
+    if s == null then Left("Identifier literal was null") // scalafix:ok
     else if s.length != 36 then Left(s"Invalid length: expected 36, got ${s.length}")
     else if s.charAt(8) != '-' || s.charAt(13) != '-' || s.charAt(18) != '-' || s.charAt(23) != '-' then
       Left("Missing or misplaced hyphens in identifier literal")
     else
       boundary:
-        var i = 0
-        while i < 36 do
+        var i = 0 // scalafix:ok
+        while i < 36 do // scalafix:ok
           val c = s.charAt(i)
           val ok =
             c == '-' ||
@@ -144,7 +144,7 @@ private object IdentifierLiteral:
               (c >= 'A' && c <= 'F')
           if !ok then break(Left(s"Invalid character '$c' at position $i in identifier literal"))
           i += 1
-        Right(()) // scalafix:ok
+        Right(())
 
   private def buildIdentifierExpr(s: String)(using Quotes): Expr[Identifier] =
     val lower = s.toLowerCase
@@ -153,16 +153,16 @@ private object IdentifierLiteral:
     '{ Identifier(${ Expr(msb) }, ${ Expr(lsb) }) }
 
   private def parseHexSegment(s: String, start: Int, end: Int, skipHyphens: Boolean): Long =
-    var acc = 0L
-    var i = start
-    while i < end do
+    var acc = 0L // scalafix:ok
+    var i = start // scalafix:ok
+    while i < end do // scalafix:ok
       val c = s.charAt(i)
       if skipHyphens && c == '-' then ()
       else
         val n = hexToNibble(c)
         acc = (acc << 4) | n
       i += 1
-    acc // scalafix:ok
+    acc
 
   private inline def hexToNibble(c: Char): Int =
     if c >= '0' && c <= '9' then c - '0'

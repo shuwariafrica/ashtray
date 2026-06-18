@@ -39,7 +39,7 @@ jobs:
           apps: sbt
 
       - name: Setup Coursier Cache
-        uses: coursier/cache-action@v7
+        uses: coursier/cache-action@v8
 
       - name: Execute Unit Tests
         run: sbt "+test"

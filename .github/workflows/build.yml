@@ -34,7 +34,7 @@ jobs:
           check-latest: true
       
       - name: Install sbt
-        uses: coursier/setup-action@v1
+        uses: coursier/setup-action@v3
         with:
           apps: sbt
 

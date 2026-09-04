@@ -21,7 +21,7 @@ import cats.Show
 
 import zio.prelude.Newtype
 
-import doobie.Meta
+import org.typelevel.doobie.Meta
 
 package object prelude:
   inline def newTypeMeta[A <: Newtype[B], B](t: A)(using Meta[B], Show[B]): Meta[t.Type] =

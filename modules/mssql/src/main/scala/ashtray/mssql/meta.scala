@@ -25,8 +25,8 @@ import java.util.UUID
 
 import cats.data.NonEmptyList
 
-import doobie.enumerated.JdbcType
-import doobie.util.meta.Meta
+import org.typelevel.doobie.enumerated.JdbcType
+import org.typelevel.doobie.util.meta.Meta
 
 import microsoft.sql.DateTimeOffset
 

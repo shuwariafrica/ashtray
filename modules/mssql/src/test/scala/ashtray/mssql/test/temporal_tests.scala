@@ -21,8 +21,8 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-import doobie.*
-import doobie.implicits.*
+import org.typelevel.doobie.*
+import org.typelevel.doobie.implicits.*
 
 import ashtray.mssql.*
 

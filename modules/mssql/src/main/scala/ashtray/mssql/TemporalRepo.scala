@@ -24,9 +24,9 @@ import scala.annotation.unused
 
 import cats.syntax.all.*
 
-import doobie.*
-import doobie.implicits.*
-import doobie.util.Put
+import org.typelevel.doobie.*
+import org.typelevel.doobie.implicits.*
+import org.typelevel.doobie.util.Put
 
 /** Repository for temporal queries. User provides schema; library provides operations.
   *

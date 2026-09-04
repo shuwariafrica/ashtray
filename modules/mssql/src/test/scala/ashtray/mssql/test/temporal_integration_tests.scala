@@ -27,8 +27,8 @@ import cats.syntax.all.*
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 
-import doobie.*
-import doobie.implicits.*
+import org.typelevel.doobie.*
+import org.typelevel.doobie.implicits.*
 
 import ashtray.mssql.*
 import ashtray.mssql.given

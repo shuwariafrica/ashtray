@@ -21,8 +21,8 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-import doobie.implicits.*
-import doobie.util.fragment.Fragment
+import org.typelevel.doobie.implicits.*
+import org.typelevel.doobie.util.fragment.Fragment
 
 /** Temporal query mode — sealed ADT for `FOR SYSTEM_TIME` clauses.
   *

@@ -21,8 +21,8 @@ import cats.effect.unsafe.implicits.global
 
 import zio.prelude.Newtype
 
-import doobie.*
-import doobie.implicits.*
+import org.typelevel.doobie.*
+import org.typelevel.doobie.implicits.*
 
 import ashtray.prelude.newTypeMeta
 import ashtray.test.MSSQLContainerSuite

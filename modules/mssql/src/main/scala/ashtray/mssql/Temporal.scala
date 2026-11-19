@@ -19,8 +19,8 @@ package ashtray.mssql
 
 import java.time.LocalDateTime
 
-import doobie.Read
-import doobie.Write
+import org.typelevel.doobie.Read
+import org.typelevel.doobie.Write
 
 /** Wrapper adding period columns to any entity type `A`.
   *

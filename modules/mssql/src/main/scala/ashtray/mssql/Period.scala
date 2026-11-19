@@ -19,7 +19,7 @@ package ashtray.mssql
 
 import java.time.LocalDateTime
 
-import doobie.util.fragment.Fragment
+import org.typelevel.doobie.util.fragment.Fragment
 
 /** Period columns for a temporal entity.
   *

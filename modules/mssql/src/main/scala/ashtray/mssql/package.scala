@@ -86,7 +86,7 @@ package object mssql extends MetaInstances:
     * val history = repo.history(employeeId)
     * }}}
     */
-  extension [F[_]](xa: doobie.Transactor[F])
+  extension [F[_]](xa: org.typelevel.doobie.Transactor[F])
     /** Derive a temporal repository for entity type `A` with primary key type `ID`.
       *
       * Requires:
@@ -101,9 +101,9 @@ package object mssql extends MetaInstances:
       */
     inline def temporal[ID, A](using
       ts: TemporalSchema[ID, A],
-      r: doobie.Read[A],
-      w: doobie.Write[A],
-      p: doobie.util.Put[ID],
+      r: org.typelevel.doobie.Read[A],
+      w: org.typelevel.doobie.Write[A],
+      p: org.typelevel.doobie.util.Put[ID],
       F: cats.effect.kernel.MonadCancelThrow[F]
     ): TemporalRepo[F, ID, A] =
       TemporalRepo.derived[F, ID, A](using ts, r, w, p, xa, F)

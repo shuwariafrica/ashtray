@@ -19,8 +19,8 @@ package ashtray.mssql
 
 import scala.annotation.publicInBinary
 
-import doobie.implicits.*
-import doobie.util.fragment.Fragment
+import org.typelevel.doobie.implicits.*
+import org.typelevel.doobie.util.fragment.Fragment
 
 /** Schema metadata for a system-versioned temporal table.
   *
